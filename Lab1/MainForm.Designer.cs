@@ -51,18 +51,18 @@
             label1.AutoSize = true;
             label1.Location = new Point(12, 9);
             label1.Name = "label1";
-            label1.Size = new Size(370, 29);
+            label1.Size = new Size(543, 29);
             label1.TabIndex = 0;
-            label1.Text = "Слова первого типа: состоят из 0 или 1";
+            label1.Text = "Слова первого типа: состоят из 0 или 1 — (111)*011(100)*";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Location = new Point(12, 38);
             label2.Name = "label2";
-            label2.Size = new Size(596, 29);
+            label2.Size = new Size(618, 29);
             label2.TabIndex = 1;
-            label2.Text = "Слова второго типа: идентификаторы (состоят из букв a, b, c, d)";
+            label2.Text = "Слова второго типа: идентификаторы (a|b|c|d)+. Нет подстроки ab";
             // 
             // label3
             // 
@@ -190,7 +190,7 @@
             MaximizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "MainForm";
+            Text = "Лексический анализатор";
             ((System.ComponentModel.ISupportInitialize)dataGridViewRecognizedTokens).EndInit();
             ResumeLayout(false);
             PerformLayout();
