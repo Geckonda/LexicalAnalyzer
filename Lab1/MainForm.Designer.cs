@@ -51,27 +51,27 @@
             label1.AutoSize = true;
             label1.Location = new Point(12, 9);
             label1.Name = "label1";
-            label1.Size = new Size(821, 29);
+            label1.Size = new Size(370, 29);
             label1.TabIndex = 0;
-            label1.Text = "Слова первого типа: числа (целые и вещественные), например  43,  5.2,  1,  23.1,  45.234";
+            label1.Text = "Слова первого типа: состоят из 0 или 1";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Location = new Point(12, 38);
             label2.Name = "label2";
-            label2.Size = new Size(1099, 29);
+            label2.Size = new Size(596, 29);
             label2.TabIndex = 1;
-            label2.Text = "Слова второго типа: идентификаторы (состоят из букв, цифр и символов подчеркивания), например  x,  MyFunc_1,  z0,";
+            label2.Text = "Слова второго типа: идентификаторы (состоят из букв a, b, c, d)";
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Location = new Point(12, 67);
             label3.Name = "label3";
-            label3.Size = new Size(422, 29);
+            label3.Size = new Size(390, 29);
             label3.TabIndex = 2;
-            label3.Text = "Комментарий: многострочный  %~  ........  ~%";
+            label3.Text = "Комментарий: многострочный  (*  ........  *)";
             // 
             // richTextBoxInput
             // 
