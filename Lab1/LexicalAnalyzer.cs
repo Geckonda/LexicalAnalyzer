@@ -65,47 +65,54 @@ namespace Lab1
         private void ReadNextSymbol()
         {
             _tr.ReadNextSymbol();
-            //_tr.ClassifyCurrentSymbol();
         }
         /// <summary>
         /// Состояния для идентификатора
         /// </summary>
-        enum IdentifierStates { S, A, Fin }
+        enum IdentifierStates { A, B, Fin }
 
         /// <summary>
         /// Распознать идентификатор.
         /// </summary>
         private void RecognizeIdentifier()
         {
-            var state = IdentifierStates.S;
+            var state = IdentifierStates.A;
             while (state != IdentifierStates.Fin)
             {
                 switch (state)
                 {
-                    case IdentifierStates.S:
-                        {
-                            if (_tr.CurSymKind == SymbolKind.Letter)
-                            {
-                                token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
-                                ReadNextSymbol(); // Читаем следующий символ в тексте.
-                                state = IdentifierStates.A;
-                            }
-                            else
-                                LexicalError("Ожидалась буква"); // Обнаружена ошибка в тексте.
-                            break;
-                        }
                     case IdentifierStates.A:
                         {
-                            if ((_tr.CurSymKind == SymbolKind.Letter)
-                                || (_tr.CurSymKind == SymbolKind.Digit)
-                                || (_tr.CurSym == '_'))
-                            {
-                                token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
-                                ReadNextSymbol(); // Читаем следующий символ в тексте.
+                            if(((int)_tr.CurSym >= (int)'b') && ((int)_tr.CurSym <= (int)'d'))
                                 state = IdentifierStates.A;
-                            }
+                            else if(_tr.CurSym == 'a')
+                                state = IdentifierStates.B;
                             else
+                            {
                                 state = IdentifierStates.Fin;
+                                break;
+                            }
+
+                            token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
+                            ReadNextSymbol(); // Читаем следующий символ в тексте.
+                            break;
+                        }
+                    case IdentifierStates.B:
+                        {
+                            if (_tr.CurSym == 'a')
+                                state = IdentifierStates.B;
+                            else if(_tr.CurSym == 'c' || _tr.CurSym == 'd')
+                                state = IdentifierStates.A;
+                            else if(_tr.CurSym == 'b')
+                                LexicalError("Ожидались 'a', 'c', 'd' или конец"); // Обнаружена ошибка в тексте.
+                            else
+                            {
+                                state = IdentifierStates.Fin;
+                                break;
+                            }
+
+                            token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
+                            ReadNextSymbol(); // Читаем следующий символ в тексте.
                             break;
                         }
                 }
@@ -115,67 +122,111 @@ namespace Lab1
         /// <summary>
         /// Состояния для числа
         /// </summary>
-        enum DigitStates { S, A, B, C, Fin }
+        enum DigitStates { A, B, C, D, E, F, G, H, Fin }
         /// <summary>
         /// Распознать число (целое или вещественное).
         /// </summary>
         private void RecognizeNumber()
         {
-            var state = DigitStates.S;
+            var state = DigitStates.A;
             while (state != DigitStates.Fin)
             {
                 switch (state)
                 {
-                    case DigitStates.S:
-                        {
-                            if (_tr.CurSymKind == SymbolKind.Digit)
-                            {
-                                token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
-                                ReadNextSymbol(); // Читаем следующий символ в тексте.
-                                state = DigitStates.A;
-                            }
-                            else
-                                LexicalError("Ожидалась цифра"); // Обнаружена ошибка в тексте.
-                            break;
-                        }
                     case DigitStates.A:
                         {
-                            if (_tr.CurSymKind == SymbolKind.Digit)
-                            {
-                                token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
-                                ReadNextSymbol(); // Читаем следующий символ в тексте.
-                            }
-                            else if (_tr.CurSym == '.')
-                            {
-                                token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
-                                ReadNextSymbol(); // Читаем следующий символ в тексте.
+                            if (_tr.CurSym == '0')
                                 state = DigitStates.B;
-                            }
+                            else if (_tr.CurSym == '1')
+                                state = DigitStates.D;
                             else
-                                state = DigitStates.Fin; // Выходим из конечного автомата.
+                                LexicalError("Ожидались '0' или '1'"); // Обнаружена ошибка в тексте.
+                            token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
+                            ReadNextSymbol(); // Читаем следующий символ в тексте.
                             break;
                         }
                     case DigitStates.B:
                         {
-                            if (_tr.CurSymKind == SymbolKind.Digit)
+                            if (_tr.CurSym == '1')
                             {
                                 token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
                                 ReadNextSymbol(); // Читаем следующий символ в тексте.
                                 state = DigitStates.C;
                             }
                             else
-                                LexicalError("Ожидалась цифра"); // Обнаружена ошибка в тексте.
+                                LexicalError("Ожидалось '1'"); // Обнаружена ошибка в тексте.
+                            break;
+                        }
+                    case DigitStates.D:
+                        {
+                            if (_tr.CurSym == '1')
+                            {
+                                token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
+                                ReadNextSymbol(); // Читаем следующий символ в тексте.
+                                state = DigitStates.E;
+                            }
+                            else
+                                LexicalError("Ожидалось '1'"); // Обнаружена ошибка в тексте.
                             break;
                         }
                     case DigitStates.C:
                         {
-                            if (_tr.CurSymKind == SymbolKind.Digit)
+                            if (_tr.CurSym == '1')
                             {
                                 token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
                                 ReadNextSymbol(); // Читаем следующий символ в тексте.
+                                state = DigitStates.H;
+                            }
+                            else
+                                LexicalError("Ожидалось '1'"); // Обнаружена ошибка в тексте.
+                            break;
+                        }
+                    case DigitStates.E:
+                        {
+                            if (_tr.CurSym == '1')
+                            {
+                                token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
+                                ReadNextSymbol(); // Читаем следующий символ в тексте.
+                                state = DigitStates.A;
+                            }
+                            else
+                                LexicalError("Ожидалось '1'"); // Обнаружена ошибка в тексте.
+                            break;
+                        }
+                    case DigitStates.H:
+                        {
+                            if (_tr.CurSym == '1')
+                            {
+                                token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
+                                ReadNextSymbol(); // Читаем следующий символ в тексте.
+                                state = DigitStates.F;
                             }
                             else
                                 state = DigitStates.Fin;
+                            break;
+                        }
+                    case DigitStates.F:
+                        {
+                            if (_tr.CurSym == '0')
+                            {
+                                token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
+                                ReadNextSymbol(); // Читаем следующий символ в тексте.
+                                state = DigitStates.G;
+                            }
+                            else
+                                LexicalError("Ожидалось '0'"); // Обнаружена ошибка в тексте.
+                            break;
+                        }
+                    case DigitStates.G:
+                        {
+                            if (_tr.CurSym == '0')
+                            {
+                                token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
+                                ReadNextSymbol(); // Читаем следующий символ в тексте.
+                                state = DigitStates.H;
+                            }
+                            else
+                                LexicalError("Ожидалось '0'"); // Обнаружена ошибка в тексте.
                             break;
                         }
                 }
