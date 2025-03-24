@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.AxHost;
 
 namespace Lab1
 {
@@ -70,55 +71,81 @@ namespace Lab1
         /// Состояния для идентификатора
         /// </summary>
         enum IdentifierStates { A, B, Fin }
+        /// <summary>
+        /// Текущее состояние идентификатора
+        /// </summary>
+        private IdentifierStates _identifierState;
 
         /// <summary>
         /// Распознать идентификатор.
         /// </summary>
         private void RecognizeIdentifier()
         {
-            var state = IdentifierStates.A;
-            while (state != IdentifierStates.Fin)
+            _identifierState = IdentifierStates.A;
+            var stateHandlers = new Dictionary<IdentifierStates, Action>
             {
-                switch (state)
-                {
-                    case IdentifierStates.A:
-                        {
-                            if(((int)_tr.CurSym >= (int)'b') && ((int)_tr.CurSym <= (int)'d'))
-                                state = IdentifierStates.A;
-                            else if(_tr.CurSym == 'a')
-                                state = IdentifierStates.B;
-                            else
-                            {
-                                state = IdentifierStates.Fin;
-                                break;
-                            }
+                [IdentifierStates.A] = () => HandleStateA(),
+                [IdentifierStates.B] = () => HandleStateB()
+            };
 
-                            token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
-                            ReadNextSymbol(); // Читаем следующий символ в тексте.
-                            break;
-                        }
-                    case IdentifierStates.B:
-                        {
-                            if (_tr.CurSym == 'a')
-                                state = IdentifierStates.B;
-                            else if(_tr.CurSym == 'c' || _tr.CurSym == 'd')
-                                state = IdentifierStates.A;
-                            else if(_tr.CurSym == 'b')
-                                LexicalError("Ожидались 'a', 'c', 'd' или конец"); // Обнаружена ошибка в тексте.
-                            else
-                            {
-                                state = IdentifierStates.Fin;
-                                break;
-                            }
-
-                            token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
-                            ReadNextSymbol(); // Читаем следующий символ в тексте.
-                            break;
-                        }
-                }
-                token.Type = TokenKind.Identifier; // Тип распознанного токена - идентификатор.
+            while (_identifierState != IdentifierStates.Fin)
+            {
+                stateHandlers[_identifierState]?.Invoke();
+                token.Type = TokenKind.Identifier;
             }
         }
+        private void HandleStateA()
+        {
+            var transitions = new Dictionary<Func<bool>, Action>
+            {
+                [() => _tr.CurSym >= 'b' && _tr.CurSym <= 'd'] = () => _identifierState = IdentifierStates.A,
+                [() => _tr.CurSym == 'a'] = () => _identifierState = IdentifierStates.B
+            };
+
+            if (!TryHandleTransition(transitions))
+            {
+                _identifierState = IdentifierStates.Fin;
+                return;
+            }
+
+            HandleSymbol();
+        }
+        private void HandleStateB()
+        {
+            var transitions = new Dictionary<Func<bool>, Action>
+            {
+                [() => _tr.CurSym == 'a'] = () => _identifierState = IdentifierStates.B,
+                [() => _tr.CurSym == 'c' || _tr.CurSym == 'd'] = () => _identifierState = IdentifierStates.A,
+                [() => _tr.CurSym == 'b'] = () => LexicalError("Ожидались 'a', 'c', 'd' или конец")
+            };
+
+            if (!TryHandleTransition(transitions))
+            {
+                _identifierState = IdentifierStates.Fin;
+                return;
+            }
+
+            HandleSymbol();
+        }
+        private bool TryHandleTransition(Dictionary<Func<bool>, Action> transitions)
+        {
+            foreach (var transition in transitions)
+            {
+                if (transition.Key()) // Проверяем условие (Func<bool>)
+                {
+                    transition.Value(); // Выполняем действие (Action)
+                    return true;
+                }
+            }
+            return false;
+        }
+        private void HandleSymbol()
+        {
+            token.Value += _tr.CurSym;
+            ReadNextSymbol();
+        }
+
+
         /// <summary>
         /// Состояния для числа
         /// </summary>
