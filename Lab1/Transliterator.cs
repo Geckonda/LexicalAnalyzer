@@ -88,23 +88,11 @@ namespace Lab1
         }
         public void ClassifyCurrentSymbol()
         {
-            if (((int)curSym >= (int)'A') && ((int)curSym <= (int)'Z')) // Если текущий символ лежит в диапазоне заглавных латинских букв.
+            if (((int)curSym >= (int)'a') && ((int)curSym <= (int)'d')) // Если текущий символ лежит в диапазоне заглавных латинских букв.
             {
                 curSymKind = SymbolKind.Letter; // Тип текущего символа - буква.
             }
-            else if (((int)curSym >= (int)'a') && ((int)curSym <= (int)'z')) // Если текущий символ лежит в диапазоне строчных латинских букв.
-            {
-                curSymKind = SymbolKind.Letter; // Тип текущего символа - буква.
-            }
-            else if (((int)curSym >= (int)'А') && ((int)curSym <= (int)'Я')) // Если текущий символ лежит в диапазоне заглавных кириллических букв.
-            {
-                curSymKind = SymbolKind.Letter; // Тип текущего символа - буква.
-            }
-            else if (((int)curSym >= (int)'а') && ((int)curSym <= (int)'я')) // Если текущий символ лежит в диапазоне строчных кириллических букв.
-            {
-                curSymKind = SymbolKind.Letter; // Тип текущего символа - буква.
-            }
-            else if (((int)curSym >= (int)'0') && ((int)curSym <= (int)'9')) // Если текущий символ лежит в диапазоне цифр.
+            else if (((int)curSym >= (int)'0') && ((int)curSym <= (int)'1')) // Если текущий символ лежит в диапазоне цифр.
             {
                 curSymKind = SymbolKind.Digit; // Тип текущего символа - цифра.
             }
@@ -116,12 +104,9 @@ namespace Lab1
                         curSymKind = SymbolKind.Space; // Тип текущего символа - пробел.
                         break;
 
-                    // Если текущий символ - точка или первый символ комментария или второй или третий символ комментария или символ подчеркивания.
-                    case '.':
                     case commentSymbol1:
                     case commentSymbol2:
                     case commentSymbol3:
-                    case '_':
                         curSymKind = SymbolKind.Reserved; // Тип текущего символа - зарезервированный.
                         break;
 
