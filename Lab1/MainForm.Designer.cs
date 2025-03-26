@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -51,27 +52,27 @@
             label1.AutoSize = true;
             label1.Location = new Point(12, 9);
             label1.Name = "label1";
-            label1.Size = new Size(543, 29);
+            label1.Size = new Size(363, 20);
             label1.TabIndex = 0;
-            label1.Text = "Слова первого типа: состоят из 0 или 1 — (111)*011(100)*";
+            label1.Text = "Слова первого типа: состоят из 0 или 1 — (011)*001(010)*";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Location = new Point(12, 38);
             label2.Name = "label2";
-            label2.Size = new Size(618, 29);
+            label2.Size = new Size(488, 20);
             label2.TabIndex = 1;
-            label2.Text = "Слова второго типа: идентификаторы (a|b|c|d)+. Нет подстроки ab";
+            label2.Text = "Слова второго типа: идентификаторы (a|b|c|d)+. Не должно заканчиваться aa";
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Location = new Point(12, 67);
             label3.Name = "label3";
-            label3.Size = new Size(390, 29);
+            label3.Size = new Size(260, 20);
             label3.TabIndex = 2;
-            label3.Text = "Комментарий: многострочный  (*  ........  *)";
+            label3.Text = "Комментарий: многострочный  {  ........  }";
             // 
             // richTextBoxInput
             // 
@@ -86,7 +87,7 @@
             label4.AutoSize = true;
             label4.Location = new Point(12, 200);
             label4.Name = "label4";
-            label4.Size = new Size(149, 29);
+            label4.Size = new Size(102, 20);
             label4.TabIndex = 4;
             label4.Text = "Входной текст:";
             // 
@@ -137,7 +138,7 @@
             label5.AutoSize = true;
             label5.Location = new Point(566, 200);
             label5.Name = "label5";
-            label5.Size = new Size(224, 29);
+            label5.Size = new Size(151, 20);
             label5.TabIndex = 6;
             label5.Text = "Распознанные токены:";
             // 
@@ -155,7 +156,7 @@
             label6.AutoSize = true;
             label6.Location = new Point(12, 575);
             label6.Name = "label6";
-            label6.Size = new Size(120, 29);
+            label6.Size = new Size(82, 20);
             label6.TabIndex = 8;
             label6.Text = "Сообщения";
             // 
@@ -171,7 +172,7 @@
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(11F, 29F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(1178, 744);
@@ -187,6 +188,7 @@
             Controls.Add(label1);
             Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
