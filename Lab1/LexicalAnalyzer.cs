@@ -193,9 +193,8 @@ namespace Lab1
                             if (_tr.CurSym == '0')
                                 state = DigitStates.B;
                             else
-                                LexicalError("Ожидались '0'"); // Обнаружена ошибка в тексте.
-                            token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
-                            ReadNextSymbol(); // Читаем следующий символ в тексте.
+                                LexicalError("Ожидалось '0'"); // Обнаружена ошибка в тексте.
+                            HandleSymbol();
                             break;
                         }
                     case DigitStates.B:
@@ -205,19 +204,17 @@ namespace Lab1
                             else if (_tr.CurSym == '1')
                                 state = DigitStates.C;
                             else
-                                LexicalError("Ожидались '0' или '1'"); // Обнаружена ошибка в тексте.
+                                LexicalError("Ожидалось '0' или '1'"); // Обнаружена ошибка в тексте.
 
-                            token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
-                            ReadNextSymbol(); // Читаем следующий символ в тексте.
+                            HandleSymbol();
                             break;
                         }
                     case DigitStates.D:
                         {
                             if (_tr.CurSym == '1')
                             {
-                                token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
-                                ReadNextSymbol(); // Читаем следующий символ в тексте.
                                 state = DigitStates.E;
+                                HandleSymbol();
                             }
                             else
                                 LexicalError("Ожидалось '1'"); // Обнаружена ошибка в тексте.
@@ -227,9 +224,8 @@ namespace Lab1
                         {
                             if (_tr.CurSym == '1')
                             {
-                                token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
-                                ReadNextSymbol(); // Читаем следующий символ в тексте.
                                 state = DigitStates.A;
+                                HandleSymbol();
                             }
                             else
                                 LexicalError("Ожидалось '1'"); // Обнаружена ошибка в тексте.
@@ -240,8 +236,7 @@ namespace Lab1
                             if (_tr.CurSym == '0')
                             {
                                 state = DigitStates.F;
-                                token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
-                                ReadNextSymbol(); // Читаем следующий символ в тексте.
+                                HandleSymbol();
                             }
                             else
                                 state = DigitStates.Fin;
@@ -251,9 +246,8 @@ namespace Lab1
                         {
                             if (_tr.CurSym == '1')
                             {
-                                token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
-                                ReadNextSymbol(); // Читаем следующий символ в тексте.
                                 state = DigitStates.G;
+                                HandleSymbol();
                             }
                             else
                                 LexicalError("Ожидалось '1'"); // Обнаружена ошибка в тексте.
@@ -263,9 +257,8 @@ namespace Lab1
                         {
                             if (_tr.CurSym == '0')
                             {
-                                token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
-                                ReadNextSymbol(); // Читаем следующий символ в тексте.
                                 state = DigitStates.E;
+                                HandleSymbol();
                             }
                             else
                                 LexicalError("Ожидалось '0'"); // Обнаружена ошибка в тексте.
