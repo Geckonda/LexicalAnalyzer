@@ -8,9 +8,11 @@ namespace Lab1
 {
     public class Transliterator
     {
-        private const char commentSymbol1 = '('; // Первый символ комментария.
-        private const char commentSymbol2 = '*'; // Второй символ комментария.
-        private const char commentSymbol3 = ')'; // Третий символ комментария.
+        private const char commentSymbol1 = '{'; // Первый символ комментария.
+        private const char commentSymbol2 = '}'; // Второй символ комментария.
+
+        public char CommentSymbol1 { get => commentSymbol1; }
+        public char CommentSymbol2 { get => commentSymbol2; }
 
         /// <summary>
         /// Входной текст - массив строк.
@@ -106,7 +108,6 @@ namespace Lab1
 
                     case commentSymbol1:
                     case commentSymbol2:
-                    case commentSymbol3:
                         curSymKind = SymbolKind.Reserved; // Тип текущего символа - зарезервированный.
                         break;
 

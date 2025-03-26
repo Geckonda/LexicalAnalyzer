@@ -29,11 +29,6 @@ namespace Lab1
     {
         private Transliterator _tr;
 
-        private const char commentSymbol1 = '('; // Первый символ комментария.
-        private const char commentSymbol2 = '*'; // Второй символ комментария.
-        private const char commentSymbol3 = ')'; // Третий символ комментария.
-
-
         private Token token;
         /// <summary>
         /// Токен, распознанный при последнем вызове метода RecognizeNextToken() - свойство только для чтения.
@@ -263,71 +258,39 @@ namespace Lab1
         /// <summary>
         /// Состояния для комментария
         /// </summary>
-        enum CommentStates { S, A, B, C, Fin }
+        enum CommentStates { A, B, Fin }
         /// <summary>
         /// Пропустить комментарий.
         /// </summary>
         private void SkipComment()
         {
-            var state = CommentStates.S;
+            var state = CommentStates.A;
             while (state != CommentStates.Fin)
             {
                 switch (state)
                 {
-                    case CommentStates.S:
-                        {
-                            if (_tr.CurSym == commentSymbol1)
-                            {
-                                ReadNextSymbol();
-                                state = CommentStates.A;
-                            }
-                            else
-                                LexicalError("Ожидалось " + commentSymbol1); // Обнаружена ошибка в тексте.
-                            break;
-                        }
                     case CommentStates.A:
                         {
-                            if (_tr.CurSym == commentSymbol2)
+                            if (_tr.CurSym == _tr.CommentSymbol1)
                             {
                                 ReadNextSymbol();
                                 state = CommentStates.B;
                             }
-                            else if (_tr.CurSymKind == SymbolKind.EndOfText)
-                                LexicalError("Незаконченный комментарий"); // Обнаружена ошибка в тексте.
                             else
-                                LexicalError("Ожидалось " + commentSymbol2); // Обнаружена ошибка в тексте.
+                                LexicalError("Ожидалось " + _tr.CommentSymbol1); // Обнаружена ошибка в тексте.
                             break;
                         }
                     case CommentStates.B:
                         {
-                            if(_tr.CurSym == commentSymbol2)
+                            if (_tr.CurSym == _tr.CommentSymbol2)
                             {
-                                ReadNextSymbol();
-                                state = CommentStates.C;
-                            }
-                            else if (_tr.CurSymKind == SymbolKind.EndOfText)
-                                LexicalError("Незаконченный комментарий"); // Обнаружена ошибка в тексте.
-                            else
-                            {
-                                ReadNextSymbol();
-                                state = CommentStates.B;
-                            }
-                            break;
-                        }
-                    case CommentStates.C:
-                        {
-                            if(_tr.CurSym == commentSymbol3)
-                            {
-                                ReadNextSymbol();
                                 state = CommentStates.Fin;
                             }
                             else if (_tr.CurSymKind == SymbolKind.EndOfText)
                                 LexicalError("Незаконченный комментарий"); // Обнаружена ошибка в тексте.
                             else
-                            {
-                                ReadNextSymbol();
                                 state = CommentStates.B;
-                            }
+                            ReadNextSymbol();
                             break;
                         }
                 }
@@ -344,9 +307,9 @@ namespace Lab1
 
             // Цикл пропуска пробелов, переходов на новую строку, комментариев.
             while (_tr.CurSymIsSpaceOrEndOfLine ||
-                    (_tr.CurSym == commentSymbol1))
+                    (_tr.CurSym == _tr.CommentSymbol1))
             {
-                if (_tr.CurSym == commentSymbol1) // Если текущий символ - первый символ комментария.
+                if (_tr.CurSym == _tr.CommentSymbol1) // Если текущий символ - первый символ комментария.
                     SkipComment(); // Пропускаем комментарий.
                 else
                     ReadNextSymbol(); // Пропускаем пробел или переход на новую строку.
