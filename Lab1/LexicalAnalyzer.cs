@@ -65,7 +65,7 @@ namespace Lab1
         /// <summary>
         /// Состояния для идентификатора
         /// </summary>
-        enum IdentifierStates { A, B, Fin }
+        enum IdentifierStates { A, B, AFin, BFin, Fin }
         /// <summary>
         /// Текущее состояние идентификатора
         /// </summary>
@@ -81,6 +81,8 @@ namespace Lab1
             {
                 [IdentifierStates.A] = () => HandleStateA(),
                 [IdentifierStates.B] = () => HandleStateB(),
+                [IdentifierStates.AFin] = () => HandleStateAFin(),
+                [IdentifierStates.BFin] = () => HandleStateBFin(),
             };
 
             while (_identifierState != IdentifierStates.Fin)
@@ -93,13 +95,13 @@ namespace Lab1
         {
             var transitions = new Dictionary<Func<bool>, Action>
             {
-                [() => _tr.CurSym >= 'b' && _tr.CurSym <= 'd'] = () => _identifierState = IdentifierStates.A,
-                [() => _tr.CurSym == 'a'] = () => _identifierState = IdentifierStates.B
+                [() => _tr.CurSym >= 'b' && _tr.CurSym <= 'd'] = () => _identifierState = IdentifierStates.AFin,
+                [() => _tr.CurSym == 'a'] = () => _identifierState = IdentifierStates.BFin
             };
 
             if (!TryHandleTransition(transitions))
             {
-                _identifierState = IdentifierStates.Fin;
+                LexicalError("Ожидались 'a', 'b', 'c', 'd'");
                 return;
             }
 
@@ -110,8 +112,39 @@ namespace Lab1
             var transitions = new Dictionary<Func<bool>, Action>
             {
                 [() => _tr.CurSym == 'a'] = () => _identifierState = IdentifierStates.B,
-                [() => _tr.CurSym >= 'b' && _tr.CurSym <= 'd'] = () => _identifierState = IdentifierStates.A,
-                //[() => _tr.CurSym == 'b'] = () => LexicalError("Ожидались 'a', 'c', 'd' или конец")
+                [() => _tr.CurSym >= 'b' && _tr.CurSym <= 'd'] = () => _identifierState = IdentifierStates.AFin,
+            };
+
+            if (!TryHandleTransition(transitions))
+            {
+                LexicalError("Ожидались 'a', 'b', 'c', 'd'");
+                return;
+            }
+
+            HandleSymbol();
+        }
+        private void HandleStateAFin()
+        {
+            var transitions = new Dictionary<Func<bool>, Action>
+            {
+                [() => _tr.CurSym == 'a'] = () => _identifierState = IdentifierStates.BFin,
+                [() => _tr.CurSym >= 'b' && _tr.CurSym <= 'd'] = () => _identifierState = IdentifierStates.AFin,
+            };
+
+            if (!TryHandleTransition(transitions))
+            {
+                _identifierState = IdentifierStates.Fin;
+                return;
+            }
+
+            HandleSymbol();
+        }
+        private void HandleStateBFin()
+        {
+            var transitions = new Dictionary<Func<bool>, Action>
+            {
+                [() => _tr.CurSym == 'a'] = () => _identifierState = IdentifierStates.B,
+                [() => _tr.CurSym >= 'b' && _tr.CurSym <= 'd'] = () => _identifierState = IdentifierStates.AFin,
             };
 
             if (!TryHandleTransition(transitions))
@@ -207,12 +240,11 @@ namespace Lab1
                             if (_tr.CurSym == '0')
                             {
                                 state = DigitStates.F;
+                                token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
+                                ReadNextSymbol(); // Читаем следующий символ в тексте.
                             }
                             else
                                 state = DigitStates.Fin;
-
-                            token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
-                            ReadNextSymbol(); // Читаем следующий символ в тексте.
                             break;
                         }
                     case DigitStates.F:
