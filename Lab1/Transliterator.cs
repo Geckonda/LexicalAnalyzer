@@ -108,6 +108,9 @@ namespace Lab1
 
                     case commentSymbol1:
                     case commentSymbol2:
+                    case '+':
+                    case '-':
+                    case '*':
                         curSymKind = SymbolKind.Reserved; // Тип текущего символа - зарезервированный.
                         break;
 

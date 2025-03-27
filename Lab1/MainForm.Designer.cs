@@ -34,17 +34,10 @@
             label3 = new Label();
             richTextBoxInput = new RichTextBox();
             label4 = new Label();
-            dataGridViewRecognizedTokens = new DataGridView();
-            Number = new DataGridViewTextBoxColumn();
-            Token = new DataGridViewTextBoxColumn();
-            TokenType = new DataGridViewTextBoxColumn();
-            LineIndex = new DataGridViewTextBoxColumn();
-            SymbolIndex = new DataGridViewTextBoxColumn();
-            label5 = new Label();
             richTextBoxMessages = new RichTextBox();
             label6 = new Label();
             buttonAnalyze = new Button();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewRecognizedTokens).BeginInit();
+            label5 = new Label();
             SuspendLayout();
             // 
             // label1
@@ -78,7 +71,7 @@
             // 
             richTextBoxInput.Location = new Point(12, 232);
             richTextBoxInput.Name = "richTextBoxInput";
-            richTextBoxInput.Size = new Size(500, 300);
+            richTextBoxInput.Size = new Size(1154, 300);
             richTextBoxInput.TabIndex = 0;
             richTextBoxInput.Text = "";
             // 
@@ -91,70 +84,19 @@
             label4.TabIndex = 4;
             label4.Text = "Входной текст:";
             // 
-            // dataGridViewRecognizedTokens
-            // 
-            dataGridViewRecognizedTokens.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewRecognizedTokens.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewRecognizedTokens.Columns.AddRange(new DataGridViewColumn[] { Number, Token, TokenType, LineIndex, SymbolIndex });
-            dataGridViewRecognizedTokens.Location = new Point(566, 232);
-            dataGridViewRecognizedTokens.Name = "dataGridViewRecognizedTokens";
-            dataGridViewRecognizedTokens.RowHeadersWidth = 62;
-            dataGridViewRecognizedTokens.Size = new Size(600, 444);
-            dataGridViewRecognizedTokens.TabIndex = 5;
-            // 
-            // Number
-            // 
-            Number.HeaderText = "№";
-            Number.MinimumWidth = 8;
-            Number.Name = "Number";
-            Number.ReadOnly = true;
-            // 
-            // Token
-            // 
-            Token.HeaderText = "Token";
-            Token.MinimumWidth = 8;
-            Token.Name = "Token";
-            // 
-            // TokenType
-            // 
-            TokenType.HeaderText = "Тип токена";
-            TokenType.MinimumWidth = 8;
-            TokenType.Name = "TokenType";
-            // 
-            // LineIndex
-            // 
-            LineIndex.HeaderText = "Индекс строки";
-            LineIndex.MinimumWidth = 8;
-            LineIndex.Name = "LineIndex";
-            // 
-            // SymbolIndex
-            // 
-            SymbolIndex.HeaderText = "Индекс символа";
-            SymbolIndex.MinimumWidth = 8;
-            SymbolIndex.Name = "SymbolIndex";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(566, 200);
-            label5.Name = "label5";
-            label5.Size = new Size(151, 20);
-            label5.TabIndex = 6;
-            label5.Text = "Распознанные токены:";
-            // 
             // richTextBoxMessages
             // 
             richTextBoxMessages.Enabled = false;
-            richTextBoxMessages.Location = new Point(12, 607);
+            richTextBoxMessages.Location = new Point(12, 633);
             richTextBoxMessages.Name = "richTextBoxMessages";
-            richTextBoxMessages.Size = new Size(500, 125);
+            richTextBoxMessages.Size = new Size(1154, 99);
             richTextBoxMessages.TabIndex = 7;
             richTextBoxMessages.Text = "";
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(12, 575);
+            label6.Location = new Point(12, 610);
             label6.Name = "label6";
             label6.Size = new Size(82, 20);
             label6.TabIndex = 8;
@@ -162,7 +104,7 @@
             // 
             // buttonAnalyze
             // 
-            buttonAnalyze.Location = new Point(816, 682);
+            buttonAnalyze.Location = new Point(434, 545);
             buttonAnalyze.Name = "buttonAnalyze";
             buttonAnalyze.Size = new Size(350, 50);
             buttonAnalyze.TabIndex = 1;
@@ -170,17 +112,25 @@
             buttonAnalyze.UseVisualStyleBackColor = true;
             buttonAnalyze.Click += buttonAnalyze_Click;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(1039, 9);
+            label5.Name = "label5";
+            label5.Size = new Size(127, 100);
+            label5.TabIndex = 9;
+            label5.Text = "КС-грамматика:\r\nS → A | B\r\nA → AB + | B\r\nB → BC * | C\r\nC → C - | <1> | <2>";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(1178, 744);
+            Controls.Add(label5);
             Controls.Add(buttonAnalyze);
             Controls.Add(label6);
             Controls.Add(richTextBoxMessages);
-            Controls.Add(label5);
-            Controls.Add(dataGridViewRecognizedTokens);
             Controls.Add(label4);
             Controls.Add(richTextBoxInput);
             Controls.Add(label3);
@@ -192,8 +142,7 @@
             MaximizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Лексический анализатор";
-            ((System.ComponentModel.ISupportInitialize)dataGridViewRecognizedTokens).EndInit();
+            Text = "Синтаксический анализатор";
             ResumeLayout(false);
             PerformLayout();
         }
@@ -205,15 +154,9 @@
         private Label label3;
         private RichTextBox richTextBoxInput;
         private Label label4;
-        private DataGridView dataGridViewRecognizedTokens;
-        private Label label5;
-        private DataGridViewTextBoxColumn Number;
-        private DataGridViewTextBoxColumn Token;
-        private DataGridViewTextBoxColumn TokenType;
-        private DataGridViewTextBoxColumn LineIndex;
-        private DataGridViewTextBoxColumn SymbolIndex;
         private RichTextBox richTextBoxMessages;
         private Label label6;
         private Button buttonAnalyze;
+        private Label label5;
     }
 }

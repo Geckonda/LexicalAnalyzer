@@ -33,10 +33,17 @@ namespace Lab1
         /// <summary>
         /// Токен, распознанный при последнем вызове метода RecognizeNextToken() - свойство только для чтения.
         /// </summary>
-        public Token Token
-        {
-            get { return token; }
-        }
+        public Token Token => token;
+
+        /// <summary>
+        /// Индекс текущей строки - свойство только для чтения.
+        /// </summary>
+        public int CurLineIndex => _tr.CurLineIndex;
+        /// <summary>
+        /// Индекс текущего символа в текущей строке - свойство только для чтения.
+        /// </summary>
+        public int CurSymIndex => _tr.CurSymIndex;
+
         public LexicalAnalyzer(string[] lines)
         {
             _tr = new(lines);
@@ -311,6 +318,37 @@ namespace Lab1
         }
 
         /// <summary>
+        /// Распознать зарезервированный символ.
+        /// </summary>
+        private void RecognizeReservedSymbol()
+        {
+            switch (_tr.CurSym)
+            {
+                case '+':
+                    token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
+                    token.Type = TokenKind.Plus; // Тип распознанного токена - "+".
+                    ReadNextSymbol(); // Читаем следующий символ в тексте.
+                    break;
+
+                case '-':
+                    token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
+                    token.Type = TokenKind.Minus; // Тип распознанного токена - "-".
+                    ReadNextSymbol(); // Читаем следующий символ в тексте.
+                    break;
+
+                case '*':
+                    token.Value += _tr.CurSym; // Наращиваем значение текущего токена.
+                    token.Type = TokenKind.Multiply; // Тип распознанного токена - "*".
+                    ReadNextSymbol(); // Читаем следующий символ в тексте.
+                    break;
+
+                default:
+                    LexicalError("Неизвестный зарезервированный символ '" + _tr.CurSym + "'"); // Обнаружена ошибка в тексте.
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Распознать следующий токен в тексте.
         /// </summary>
         public void RecognizeNextToken()
@@ -343,6 +381,10 @@ namespace Lab1
 
                 case SymbolKind.Digit: // Если текущий символ - цифра.
                     RecognizeNumber(); // Вызываем процедуру распознавания числа (целого или вещественного).
+                    break;
+
+                case SymbolKind.Reserved: // Если текущий символ - зарезервированный.
+                    RecognizeReservedSymbol(); // Вызываем процедуру распознавания зарезервированного символа.
                     break;
 
                 case SymbolKind.EndOfText: // Если текущий символ - конец текста.

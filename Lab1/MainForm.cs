@@ -19,38 +19,37 @@ namespace Lab1
         // Обработчик события нажатия кнопки "Анализировать текст".
         private void buttonAnalyze_Click(object sender, EventArgs e)
         {
-            // Очищаем поле сообщений и таблицу распознанных токенов.
+            // Очищаем поле сообщений.
             richTextBoxMessages.Clear();
-            dataGridViewRecognizedTokens.Rows.Clear();
 
-            // Создаем лексический анализатор.
+            // Создаем синтаксический анализатор.
             // Передаем ему на анализ строки текстового поля.
-            LexicalAnalyzer lexAn = new LexicalAnalyzer(richTextBoxInput.Lines);
+            SyntaxAnalyzer synAn = new SyntaxAnalyzer(richTextBoxInput.Lines);
 
-            int k = 0; // Инициализируем счетчик распознанных токенов.
-
-            // Процесс лексического анализа должен быть обернут в "try...catch",
-            // поскольку лексический анализатор при обнаружении ошибки в тексте генерирует исключительную ситуацию.
+            // Процесс синтаксического анализа должен быть обернут в "try...catch",
+            // поскольку синтаксический анализатор при обнаружении ошибки в тексте генерирует исключительную ситуацию.
             try
             {
-                // Цикл чтения текста от начала до конца.
-                do
-                {
-                    lexAn.RecognizeNextToken(); // Распознаем очередной токен в тексте.
-
-                    k++; // Увеличиваем счетчик распознанных токенов.
-                    dataGridViewRecognizedTokens.Rows.Add(k, lexAn.Token.Value, lexAn.Token.Type, lexAn.Token.LineIndex + 1, lexAn.Token.SymStartIndex + 1); // Добавляем распознанный токен в таблицу.
-                }
-                while (lexAn.Token.Type != TokenKind.EndOfText); // Цикл работает до тех пор, пока не будет возвращен токен "Конец текста".
+                synAn.ParseText(); // Производим синтаксический (и лексический, естественно, тоже) анализ текста.
 
                 richTextBoxMessages.AppendText("Текст правильный"); // Если дошли до сюда, то в тексте не было ошибок. Сообщаем об этом.
+            }
+            catch (SynAnException synAnException)
+            {
+                // В тексте была обнаружена синтаксическая ошибка.
+
+                // Добавляем описание ошибки в поле сообщений.
+                richTextBoxMessages.AppendText(String.Format("Синтаксическая ошибка ({0},{1}): {2}", synAnException.LineIndex + 1, synAnException.SymIndex + 1, synAnException.Message));
+
+                // Располагаем курсор в исходном тексте на позиции ошибки.
+                LocateCursorAtErrorPosition(synAnException.LineIndex, synAnException.SymIndex);
             }
             catch (LexAnException lexAnException)
             {
                 // В тексте была обнаружена лексическая ошибка.
 
                 // Добавляем описание ошибки в поле сообщений.
-                richTextBoxMessages.AppendText(String.Format("Ошибка ({0},{1}): {2}", lexAnException.LineIndex + 1, lexAnException.SymIndex + 1, lexAnException.Message));
+                richTextBoxMessages.AppendText(String.Format("Лексическая ошибка ({0},{1}): {2}", lexAnException.LineIndex + 1, lexAnException.SymIndex + 1, lexAnException.Message));
 
                 // Располагаем курсор в исходном тексте на позиции ошибки.
                 LocateCursorAtErrorPosition(lexAnException.LineIndex, lexAnException.SymIndex);

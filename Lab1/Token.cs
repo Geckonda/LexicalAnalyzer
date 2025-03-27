@@ -13,6 +13,9 @@ namespace Lab1
     {
         Number,     // Число.
         Identifier, // Идентификатор.
+        Plus,       // +.
+        Minus,      // -.
+        Multiply,   // *.
         EndOfText,  // Конец текста.
         Unknown     // Неизвестный.
     };
