@@ -70,12 +70,99 @@ namespace Lab1
         {
             _la.RecognizeNextToken(); // Распознаем первый токен в тексте.
 
-            //E(); // Вызываем процедуру разбора для стартового нетерминала E.
+            S(); // Вызываем процедуру разбора для стартового нетерминала S.
 
             if (_la.Token.Type != TokenKind.EndOfText) // Если текущий токен не является концом текста.
             {
                 SyntaxError("После арифметического выражения идет еще какой-то текст"); // Обнаружена синтаксическая ошибка.
             }
         }
+        /// <summary>
+        /// S → B S'
+        /// </summary>
+        private void S()
+        {
+            B();
+            SPrime();
+        }
+        /// <summary>
+        /// S' → + B S' | ε
+        /// </summary>
+        private void SPrime()
+        {
+            if (_la.Token.Type == TokenKind.Plus) // First(+ B S') = { '+' }
+            {
+                Match(TokenKind.Plus);
+                B();
+                SPrime();
+            }
+            else if (_la.Token.Type != TokenKind.EndOfText) // Follow(S') = { $ }
+            {
+                SyntaxError("Ожидалось '+' или конец строки");
+            }
+        }
+        /// <summary>
+        ///  B → C B'
+        /// </summary>
+        private void B()
+        {
+            C();
+            BPrime();
+        }
+        /// <summary>
+        /// B' → * C B' | ε
+        /// </summary>
+        private void BPrime()
+        {
+            if (_la.Token.Type == TokenKind.Multiply) // First(* C B') = { '*' }
+            {
+                Match(TokenKind.Multiply);
+                C();
+                BPrime();
+            }
+            else if (_la.Token.Type != TokenKind.Plus &&
+                 _la.Token.Type != TokenKind.EndOfText) // Follow(B') = { +, $ }
+            {
+                SyntaxError("Ожидалось '*', '+' или конец строки");
+            }
+        }
+        /// <summary>
+        /// C → <1> | <2> | <1> C' | <2> C'
+        /// </summary>
+        private void C()
+        {
+            if (_la.Token.Type == TokenKind.Number)
+            {
+                Match(TokenKind.Number);
+                CPrime();
+            }
+            else if (_la.Token.Type == TokenKind.Identifier)
+            {
+                Match(TokenKind.Identifier);
+                CPrime();
+            }
+            else
+            {
+                SyntaxError("Ожидалось слово 'первого типа' или 'второго типа'");
+            }
+        }
+        /// <summary>
+        /// C' → - C' | ε
+        /// </summary>
+        private void CPrime()
+        {
+            if (_la.Token.Type == TokenKind.Minus) // First(- C') = { '-' }
+            {
+                Match(TokenKind.Minus);
+                CPrime();
+            }
+            else if (_la.Token.Type != TokenKind.Multiply &&
+                     _la.Token.Type != TokenKind.Plus &&
+                     _la.Token.Type != TokenKind.EndOfText) // Follow(C') = { *, +, $ }
+            {
+                SyntaxError("Ожидалось '-', '*', '+' или конец строки");
+            }
+        }
+
     }
 }
