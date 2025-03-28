@@ -69,6 +69,7 @@ namespace Lab1
         public void ParseText()
         {
             _la.RecognizeNextToken(); // Распознаем первый токен в тексте.
+            if (_la.Token.Type == TokenKind.EndOfText) return;
 
             S(); // Вызываем процедуру разбора для стартового нетерминала S.
 
