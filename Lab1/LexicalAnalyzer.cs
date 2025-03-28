@@ -95,8 +95,8 @@ namespace Lab1
             while (_identifierState != IdentifierStates.Fin)
             {
                 stateHandlers[_identifierState]?.Invoke();
-                token.Type = TokenKind.Identifier;
             }
+            token.Type = TokenKind.Identifier;
         }
         private void HandleStateA()
         {
@@ -245,6 +245,8 @@ namespace Lab1
                                 state = DigitStates.F;
                                 HandleSymbol();
                             }
+                            else if( _tr.CurSym == '1')
+                                LexicalError("Ожидалось '0' или конец"); // Обнаружена ошибка в тексте.
                             else
                                 state = DigitStates.Fin;
                             break;
