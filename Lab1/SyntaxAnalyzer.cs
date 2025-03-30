@@ -128,7 +128,7 @@ namespace Lab1
             }
         }
         /// <summary>
-        /// C → <1> | <2> | <1> C' | <2> C'
+        /// C → <1> C' | <2> C'
         /// </summary>
         private void C()
         {
