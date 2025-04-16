@@ -9,7 +9,7 @@ namespace Lab1
     /// <summary>
     /// Тип токена.
     /// </summary>
-    enum TokenKind
+    public enum TokenKind
     {
         Number,     // Число.
         Identifier, // Идентификатор.
@@ -20,7 +20,7 @@ namespace Lab1
         Unknown     // Неизвестный.
     };
 
-    class Token
+    public class Token
     {
         private string? value;   // Значение токена (само слово).
         private TokenKind type; // Тип токена.
