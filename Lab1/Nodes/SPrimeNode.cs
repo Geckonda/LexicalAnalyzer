@@ -13,6 +13,8 @@ namespace Lab1.Nodes
             this.name = "S'";
         }
         public bool IsEmpty { get; set; }
+
+        public Token? Plus;
         public BNode? B { get; set; }
         public SPrimeNode? SPrimeNext { get; set; }
         public override void Accept(IVisitor v)

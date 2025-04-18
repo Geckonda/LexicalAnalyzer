@@ -12,7 +12,7 @@ namespace Lab1.Nodes
         {
             this.name = "B'";
         }
-        public const char Star = '*';
+        public Token? Star;
         public CNode? C {  get; set; }
         public BPrimeNode? BPrimeNext { get; set; }
         public override void Accept(IVisitor v)
