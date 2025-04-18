@@ -39,6 +39,7 @@
             buttonAnalyze = new Button();
             label5 = new Label();
             treeViewSyntax = new TreeView();
+            label7 = new Label();
             SuspendLayout();
             // 
             // label1
@@ -70,16 +71,16 @@
             // 
             // richTextBoxInput
             // 
-            richTextBoxInput.Location = new Point(12, 232);
+            richTextBoxInput.Location = new Point(12, 152);
             richTextBoxInput.Name = "richTextBoxInput";
-            richTextBoxInput.Size = new Size(772, 300);
+            richTextBoxInput.Size = new Size(488, 284);
             richTextBoxInput.TabIndex = 0;
-            richTextBoxInput.Text = "";
+            richTextBoxInput.Text = "011011001 * 001 + baab * 001010010";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(12, 200);
+            label4.Location = new Point(12, 129);
             label4.Name = "label4";
             label4.Size = new Size(102, 20);
             label4.TabIndex = 4;
@@ -88,16 +89,16 @@
             // richTextBoxMessages
             // 
             richTextBoxMessages.Enabled = false;
-            richTextBoxMessages.Location = new Point(12, 633);
+            richTextBoxMessages.Location = new Point(12, 529);
             richTextBoxMessages.Name = "richTextBoxMessages";
-            richTextBoxMessages.Size = new Size(1154, 99);
+            richTextBoxMessages.Size = new Size(902, 99);
             richTextBoxMessages.TabIndex = 7;
             richTextBoxMessages.Text = "";
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(12, 610);
+            label6.Location = new Point(12, 506);
             label6.Name = "label6";
             label6.Size = new Size(82, 20);
             label6.TabIndex = 8;
@@ -105,7 +106,7 @@
             // 
             // buttonAnalyze
             // 
-            buttonAnalyze.Location = new Point(12, 538);
+            buttonAnalyze.Location = new Point(150, 442);
             buttonAnalyze.Name = "buttonAnalyze";
             buttonAnalyze.Size = new Size(350, 50);
             buttonAnalyze.TabIndex = 1;
@@ -116,25 +117,37 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(1039, 9);
+            label5.Font = new Font("Arial Narrow", 11F);
+            label5.Location = new Point(783, 9);
             label5.Name = "label5";
-            label5.Size = new Size(127, 100);
+            label5.Size = new Size(120, 140);
             label5.TabIndex = 9;
-            label5.Text = "КС-грамматика:\r\nS → A | B\r\nA → AB + | B\r\nB → BC * | C\r\nC → C - | <1> | <2>";
+            label5.Text = "КС-грамматика:\r\nS → B S’\r\nS’ → + B S’ | ε\r\nB → C B’\r\nB’ → * C B’ | ε\r\nC → <1> C’ | <2> C’\r\nC’ → - C’ | ε";
             // 
             // treeViewSyntax
             // 
-            treeViewSyntax.Location = new Point(790, 232);
+            treeViewSyntax.BackColor = SystemColors.Control;
+            treeViewSyntax.Location = new Point(538, 152);
             treeViewSyntax.Name = "treeViewSyntax";
-            treeViewSyntax.Size = new Size(376, 300);
+            treeViewSyntax.Size = new Size(376, 371);
             treeViewSyntax.TabIndex = 11;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(538, 129);
+            label7.Name = "label7";
+            label7.Size = new Size(61, 20);
+            label7.TabIndex = 12;
+            label7.Text = "Дерево:";
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            ClientSize = new Size(1178, 744);
+            ClientSize = new Size(927, 636);
+            Controls.Add(label7);
             Controls.Add(treeViewSyntax);
             Controls.Add(label5);
             Controls.Add(buttonAnalyze);
@@ -151,7 +164,7 @@
             MaximizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Синтаксический анализатор";
+            Text = "Синтаксический анализатор (с деревом)";
             ResumeLayout(false);
             PerformLayout();
         }
@@ -168,5 +181,6 @@
         private Button buttonAnalyze;
         private Label label5;
         private TreeView treeViewSyntax;
+        private Label label7;
     }
 }
