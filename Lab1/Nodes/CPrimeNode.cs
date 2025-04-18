@@ -12,7 +12,7 @@ namespace Lab1.Nodes
         {
             this.name = "C'";
         }
-        public bool IsEmpty { get; set; }
+        public Token? Minus { get; set; }
         public CPrimeNode? CPrimeNext { get; set; }
 
         public override void Accept(IVisitor v)
