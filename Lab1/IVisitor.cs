@@ -13,7 +13,8 @@ namespace Lab1
         void Visit(SPrimeNode node);
         void Visit(BNode node);
         void Visit(BPrimeNode node);
-        void Visit(CNode node);
+        void Visit(CNumberNode node);
+        void Visit(CIdentifierNode node);
         void Visit(CPrimeNode node);
     }
 }

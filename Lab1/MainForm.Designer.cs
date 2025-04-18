@@ -38,6 +38,7 @@
             label6 = new Label();
             buttonAnalyze = new Button();
             label5 = new Label();
+            treeTextBox = new RichTextBox();
             SuspendLayout();
             // 
             // label1
@@ -71,7 +72,7 @@
             // 
             richTextBoxInput.Location = new Point(12, 232);
             richTextBoxInput.Name = "richTextBoxInput";
-            richTextBoxInput.Size = new Size(1154, 300);
+            richTextBoxInput.Size = new Size(772, 300);
             richTextBoxInput.TabIndex = 0;
             richTextBoxInput.Text = "";
             // 
@@ -104,7 +105,7 @@
             // 
             // buttonAnalyze
             // 
-            buttonAnalyze.Location = new Point(434, 545);
+            buttonAnalyze.Location = new Point(12, 538);
             buttonAnalyze.Name = "buttonAnalyze";
             buttonAnalyze.Size = new Size(350, 50);
             buttonAnalyze.TabIndex = 1;
@@ -121,12 +122,23 @@
             label5.TabIndex = 9;
             label5.Text = "КС-грамматика:\r\nS → A | B\r\nA → AB + | B\r\nB → BC * | C\r\nC → C - | <1> | <2>";
             // 
+            // treeTextBox
+            // 
+            treeTextBox.BackColor = SystemColors.Desktop;
+            treeTextBox.ForeColor = SystemColors.Info;
+            treeTextBox.Location = new Point(790, 232);
+            treeTextBox.Name = "treeTextBox";
+            treeTextBox.Size = new Size(376, 300);
+            treeTextBox.TabIndex = 10;
+            treeTextBox.Text = "";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(1178, 744);
+            Controls.Add(treeTextBox);
             Controls.Add(label5);
             Controls.Add(buttonAnalyze);
             Controls.Add(label6);
@@ -158,5 +170,6 @@
         private Label label6;
         private Button buttonAnalyze;
         private Label label5;
+        private RichTextBox treeTextBox;
     }
 }
