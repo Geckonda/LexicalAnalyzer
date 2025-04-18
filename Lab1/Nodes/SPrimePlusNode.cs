@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lab1.Nodes.@abstract;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace Lab1.Nodes
 {
-    public class SPrimeNode : Node
+    public class SPrimePlusNode : SPrimeNode
     {
-        public SPrimeNode()
+        public SPrimePlusNode()
         {
-            this.name = "S'";
+            this.name = "S' +";
         }
-        public bool IsEmpty { get; set; }
 
         public Token? Plus;
         public BNode? B { get; set; }

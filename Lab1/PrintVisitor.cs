@@ -1,4 +1,5 @@
 ﻿using Lab1.Nodes;
+using Lab1.Nodes.@abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,17 @@ namespace Lab1
 {
     public class PrintVisitor : IVisitor
     {
-
         public void Visit(SNode node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(SPrimeNode node)
+        public void Visit(SPrimePlusNode node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(SPrimeEmptyNode node)
         {
             throw new NotImplementedException();
         }
@@ -25,12 +30,12 @@ namespace Lab1
             throw new NotImplementedException();
         }
 
-        public void Visit(BPrimeNode node)
+        public void Visit(BPrimeMultNode node)
         {
             throw new NotImplementedException();
         }
 
-        public void Visit(CPrimeNode node)
+        public void Visit(BPrimeEmptyNode node)
         {
             throw new NotImplementedException();
         }
@@ -41,6 +46,16 @@ namespace Lab1
         }
 
         public void Visit(CIdentifierNode node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(CPrimeMinusNode node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(CPrimeEmptyNode node)
         {
             throw new NotImplementedException();
         }

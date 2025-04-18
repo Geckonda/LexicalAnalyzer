@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lab1.Nodes.@abstract;
 
-namespace Lab1.Nodes
+namespace Lab1.Nodes.@abstract
 {
-    public abstract class Node
+    public abstract class BPrimeNode : Node
     {
-        public string name;
-        public abstract void Accept(IVisitor v);
-
     }
 }

@@ -1,20 +1,18 @@
-﻿using System;
+﻿using Lab1.Nodes.@abstract;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Lab1.Nodes.@abstract;
 
 namespace Lab1.Nodes
 {
-    public class SNode : Node
+    public class SPrimeEmptyNode : SPrimeNode
     {
-        public SNode()
+        public SPrimeEmptyNode()
         {
-            this.name = "S";
+            this.name = "S' ε";
         }
-        public BNode? B {  get; set; }
-        public SPrimeNode? SPrime { get; set; }
         public override void Accept(IVisitor v)
         {
             v.Visit(this);
