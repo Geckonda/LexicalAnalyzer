@@ -17,9 +17,9 @@ namespace Lab1.Nodes
         public Token? Plus { get; set; }
         public BNode? B { get; set; }
         public SPrimeNode? SPrimeNext { get; set; }
-        public override void Accept(IVisitor v)
+        public override TreeNode Accept(IVisitor v)
         {
-            v.Visit(this);
+            return v.Visit(this);
         }
     }
 }

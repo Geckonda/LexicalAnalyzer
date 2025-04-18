@@ -9,7 +9,7 @@ namespace Lab1.Nodes.@abstract
     public abstract class Node
     {
         public string Name { get; protected set; }
-        public abstract void Accept(IVisitor v);
+        public abstract TreeNode Accept(IVisitor v);
 
     }
 }
