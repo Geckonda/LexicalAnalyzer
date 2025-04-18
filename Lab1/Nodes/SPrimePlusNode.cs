@@ -14,7 +14,7 @@ namespace Lab1.Nodes
             this.Name = "S' +";
         }
 
-        public Token? Plus;
+        public Token? Plus { get; set; }
         public BNode? B { get; set; }
         public SPrimeNode? SPrimeNext { get; set; }
         public override void Accept(IVisitor v)
