@@ -11,7 +11,7 @@ namespace Lab1.Nodes
     {
         public CIdentifierNode()
         {
-            this.name = "C <2>";
+            this.Name = "C <2>";
         }
         public Token? Id { get; set; }
         public CPrimeNode? CPrime { get; set; }

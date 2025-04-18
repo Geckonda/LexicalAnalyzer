@@ -11,7 +11,7 @@ namespace Lab1.Nodes
     {
         public CPrimeMinusNode()
         {
-            this.name = "C' -";
+            this.Name = "C' -";
         }
         public Token? Minus { get; set; }
         public CPrimeNode? CPrimeNext { get; set; }

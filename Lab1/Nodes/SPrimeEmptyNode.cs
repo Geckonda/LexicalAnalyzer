@@ -11,7 +11,7 @@ namespace Lab1.Nodes
     {
         public SPrimeEmptyNode()
         {
-            this.name = "S' ε";
+            this.Name = "S' ε";
         }
         public override void Accept(IVisitor v)
         {

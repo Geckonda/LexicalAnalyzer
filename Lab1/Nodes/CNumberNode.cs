@@ -11,7 +11,7 @@ namespace Lab1.Nodes
     {
         public CNumberNode()
         {
-            this.name = "C <1>";
+            this.Name = "C <1>";
         }
         public Token? Id { get; set; }
         public CPrimeNode? CPrime { get; set; }

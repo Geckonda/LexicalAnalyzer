@@ -11,7 +11,7 @@ namespace Lab1.Nodes
     {
         public SNode()
         {
-            this.name = "S";
+            this.Name = "S";
         }
         public BNode? B {  get; set; }
         public SPrimeNode? SPrime { get; set; }

@@ -11,7 +11,7 @@ namespace Lab1.Nodes
     {
         public SPrimePlusNode()
         {
-            this.name = "S' +";
+            this.Name = "S' +";
         }
 
         public Token? Plus;

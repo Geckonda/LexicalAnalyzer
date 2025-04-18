@@ -11,7 +11,7 @@ namespace Lab1.Nodes
     {
         public BPrimeMultNode()
         {
-            name = "B' *";
+            Name = "B' *";
         }
         public Token? Mult;
         public CNode? C { get; set; }
