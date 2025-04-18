@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lab1.Nodes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,6 +22,7 @@ namespace Lab1
         {
             // Очищаем поле сообщений.
             richTextBoxMessages.Clear();
+            treeViewSyntax.Nodes.Clear(); // Очистка дерева перед новым анализом
 
             // Создаем синтаксический анализатор.
             // Передаем ему на анализ строки текстового поля.
@@ -30,7 +32,15 @@ namespace Lab1
             // поскольку синтаксический анализатор при обнаружении ошибки в тексте генерирует исключительную ситуацию.
             try
             {
-                synAn.ParseText(); // Производим синтаксический (и лексический, естественно, тоже) анализ текста.
+                SNode? root = synAn.ParseText(); // Производим синтаксический (и лексический, естественно, тоже) анализ текста.
+
+                if (root != null)
+                {
+                    var visitor = new PrintVisitor();
+                    TreeNode treeRoot = root.Accept(visitor);
+                    treeViewSyntax.Nodes.Add(treeRoot);
+                    treeViewSyntax.ExpandAll();
+                }
 
                 richTextBoxMessages.AppendText("Текст правильный"); // Если дошли до сюда, то в тексте не было ошибок. Сообщаем об этом.
             }

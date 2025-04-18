@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Lab1.Nodes;
+using Lab1.Nodes.@abstract;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -66,103 +68,131 @@ namespace Lab1
         /// <summary>
         /// Провести синтаксический анализ текста.
         /// </summary>
-        public void ParseText()
+        public SNode? ParseText()
         {
             _la.RecognizeNextToken(); // Распознаем первый токен в тексте.
-            if (_la.Token.Type == TokenKind.EndOfText) return;
+            if (_la.Token.Type == TokenKind.EndOfText) return null;
 
-            S(); // Вызываем процедуру разбора для стартового нетерминала S.
-
+            SNode node = S(); // Вызываем процедуру разбора для стартового нетерминала S.
+            
             if (_la.Token.Type != TokenKind.EndOfText) // Если текущий токен не является концом текста.
             {
                 SyntaxError("После арифметического выражения идет еще какой-то текст"); // Обнаружена синтаксическая ошибка.
+                return null;
             }
+            return node;
         }
         /// <summary>
         /// S → B S'
         /// </summary>
-        private void S()
+        private SNode S()
         {
-            B();
-            SPrime();
+            SNode node = new SNode();
+            node.B = B();
+            node.SPrime = SPrime();
+            return node;
         }
         /// <summary>
         /// S' → + B S' | ε
         /// </summary>
-        private void SPrime()
+        private SPrimeNode SPrime()
         {
             if (_la.Token.Type == TokenKind.Plus) // First(+ B S') = { '+' }
             {
+                SPrimePlusNode node = new SPrimePlusNode();
+                node.Plus = _la.Token;
                 Match(TokenKind.Plus);
-                B();
-                SPrime();
+                node.B = B();
+                node.SPrimeNext = SPrime();
+                return node;
             }
             else if (_la.Token.Type != TokenKind.EndOfText) // Follow(S') = { $ }
             {
                 SyntaxError("Ожидалось '+' или конец строки");
+                return null!;
             }
+            return new SPrimeEmptyNode();
         }
         /// <summary>
         ///  B → C B'
         /// </summary>
-        private void B()
+        private BNode B()
         {
-            C();
-            BPrime();
+            BNode node = new BNode();
+            node.C = C();
+            node.BPrime = BPrime();
+            return node;
         }
         /// <summary>
         /// B' → * C B' | ε
         /// </summary>
-        private void BPrime()
+        private BPrimeNode BPrime()
         {
             if (_la.Token.Type == TokenKind.Multiply) // First(* C B') = { '*' }
             {
+                BPrimeMultNode node = new BPrimeMultNode();
+                node.Mult = _la.Token;
                 Match(TokenKind.Multiply);
-                C();
-                BPrime();
+                node.C = C();
+                node.BPrimeNext = BPrime();
+                return node;
             }
             else if (_la.Token.Type != TokenKind.Plus &&
                  _la.Token.Type != TokenKind.EndOfText) // Follow(B') = { +, $ }
             {
                 SyntaxError("Ожидалось '*', '+' или конец строки");
+                return null!;
             }
+            return new BPrimeEmptyNode();
         }
         /// <summary>
         /// C → <1> C' | <2> C'
         /// </summary>
-        private void C()
+        private CNode C()
         {
             if (_la.Token.Type == TokenKind.Number)
             {
+                CNumberNode node = new CNumberNode();
+                node.Number = _la.Token;
                 Match(TokenKind.Number);
-                CPrime();
+                node.CPrime = CPrime();
+                return node;
             }
             else if (_la.Token.Type == TokenKind.Identifier)
             {
+                CIdentifierNode node = new CIdentifierNode();
+                node.Id = _la.Token;
                 Match(TokenKind.Identifier);
-                CPrime();
+                node.CPrime = CPrime();
+                return node;
             }
             else
             {
                 SyntaxError("Ожидалось слово 'первого типа' или 'второго типа'");
+                return null!;
             }
         }
         /// <summary>
         /// C' → - C' | ε
         /// </summary>
-        private void CPrime()
+        private CPrimeNode CPrime()
         {
             if (_la.Token.Type == TokenKind.Minus) // First(- C') = { '-' }
             {
+                CPrimeMinusNode node = new CPrimeMinusNode();
+                node.Minus = _la.Token;
                 Match(TokenKind.Minus);
-                CPrime();
+                node.CPrimeNext = CPrime();
+                return node;
             }
             else if (_la.Token.Type != TokenKind.Multiply &&
                      _la.Token.Type != TokenKind.Plus &&
                      _la.Token.Type != TokenKind.EndOfText) // Follow(C') = { *, +, $ }
             {
                 SyntaxError("Ожидалось '-', '*', '+' или конец строки");
+                return null!;
             }
+            return new CPrimeEmptyNode();
         }
 
     }

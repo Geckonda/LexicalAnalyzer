@@ -10,54 +10,80 @@ namespace Lab1
 {
     public class PrintVisitor : IVisitor
     {
-        public void Visit(SNode node)
+        public TreeNode Visit(SNode node)
         {
-            throw new NotImplementedException();
+            var treeNode = new TreeNode("S");
+            treeNode.Nodes.Add(SafeVisit(node.B, "B → ε"));
+            treeNode.Nodes.Add(SafeVisit(node.SPrime, "S' → ε"));
+            return treeNode;
         }
 
-        public void Visit(SPrimePlusNode node)
+        public TreeNode Visit(SPrimePlusNode node)
         {
-            throw new NotImplementedException();
+            var treeNode = new TreeNode("S' → + B S'");
+            treeNode.Nodes.Add(new TreeNode("+"));
+            treeNode.Nodes.Add(SafeVisit(node.B, "B → ε"));
+            treeNode.Nodes.Add(SafeVisit(node.SPrimeNext, "S' → ε"));
+            return treeNode;
         }
 
-        public void Visit(SPrimeEmptyNode node)
+        public TreeNode Visit(SPrimeEmptyNode node)
         {
-            throw new NotImplementedException();
+            return new TreeNode("S' → ε");
         }
 
-        public void Visit(BNode node)
+        public TreeNode Visit(BNode node)
         {
-            throw new NotImplementedException();
+            var treeNode = new TreeNode("B");
+            treeNode.Nodes.Add(SafeVisit(node.C, "C → ε"));
+            treeNode.Nodes.Add(SafeVisit(node.BPrime, "B' → ε"));
+            return treeNode;
         }
 
-        public void Visit(BPrimeMultNode node)
+        public TreeNode Visit(BPrimeMultNode node)
         {
-            throw new NotImplementedException();
+            var treeNode = new TreeNode("B' → * C B'");
+            treeNode.Nodes.Add(new TreeNode("*"));
+            treeNode.Nodes.Add(SafeVisit(node.C, "C → ε"));
+            treeNode.Nodes.Add(SafeVisit(node.BPrimeNext, "B' → ε"));
+            return treeNode;
         }
 
-        public void Visit(BPrimeEmptyNode node)
+        public TreeNode Visit(BPrimeEmptyNode node)
         {
-            throw new NotImplementedException();
+            return new TreeNode("B' → ε");
         }
 
-        public void Visit(CNumberNode node)
+        public TreeNode Visit(CNumberNode node)
         {
-            throw new NotImplementedException();
+            var treeNode = new TreeNode($"C.num → ({node.Number!.Value}) C' ");
+            treeNode.Nodes.Add(SafeVisit(node.CPrime, "C' → ε"));
+            return treeNode;
         }
 
-        public void Visit(CIdentifierNode node)
+        public TreeNode Visit(CIdentifierNode node)
         {
-            throw new NotImplementedException();
+            var treeNode = new TreeNode($"C.id → ({node.Id!.Value}) C' ");
+            treeNode.Nodes.Add(SafeVisit(node.CPrime, "C' → ε"));
+            return treeNode;
         }
 
-        public void Visit(CPrimeMinusNode node)
+        public TreeNode Visit(CPrimeMinusNode node)
         {
-            throw new NotImplementedException();
+            var treeNode = new TreeNode("C' → - C");
+            treeNode.Nodes.Add(new TreeNode("-"));
+            treeNode.Nodes.Add(SafeVisit(node.CPrimeNext, "C → ε"));
+            return treeNode;
         }
 
-        public void Visit(CPrimeEmptyNode node)
+        public TreeNode Visit(CPrimeEmptyNode node)
         {
-            throw new NotImplementedException();
+            return new TreeNode("C' → ε");
+        }
+
+        private TreeNode SafeVisit(Node? node, string emptyLabel)
+        {
+            return node != null ? node.Accept(this) : new TreeNode(emptyLabel);
         }
     }
 }

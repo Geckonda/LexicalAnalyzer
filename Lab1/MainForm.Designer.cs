@@ -38,7 +38,7 @@
             label6 = new Label();
             buttonAnalyze = new Button();
             label5 = new Label();
-            treeTextBox = new RichTextBox();
+            treeViewSyntax = new TreeView();
             SuspendLayout();
             // 
             // label1
@@ -122,15 +122,12 @@
             label5.TabIndex = 9;
             label5.Text = "КС-грамматика:\r\nS → A | B\r\nA → AB + | B\r\nB → BC * | C\r\nC → C - | <1> | <2>";
             // 
-            // treeTextBox
+            // treeViewSyntax
             // 
-            treeTextBox.BackColor = SystemColors.Desktop;
-            treeTextBox.ForeColor = SystemColors.Info;
-            treeTextBox.Location = new Point(790, 232);
-            treeTextBox.Name = "treeTextBox";
-            treeTextBox.Size = new Size(376, 300);
-            treeTextBox.TabIndex = 10;
-            treeTextBox.Text = "";
+            treeViewSyntax.Location = new Point(790, 232);
+            treeViewSyntax.Name = "treeViewSyntax";
+            treeViewSyntax.Size = new Size(376, 300);
+            treeViewSyntax.TabIndex = 11;
             // 
             // MainForm
             // 
@@ -138,7 +135,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(1178, 744);
-            Controls.Add(treeTextBox);
+            Controls.Add(treeViewSyntax);
             Controls.Add(label5);
             Controls.Add(buttonAnalyze);
             Controls.Add(label6);
@@ -170,6 +167,6 @@
         private Label label6;
         private Button buttonAnalyze;
         private Label label5;
-        private RichTextBox treeTextBox;
+        private TreeView treeViewSyntax;
     }
 }
