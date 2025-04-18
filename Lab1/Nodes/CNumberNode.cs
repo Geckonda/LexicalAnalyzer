@@ -13,7 +13,7 @@ namespace Lab1.Nodes
         {
             this.Name = "C <1>";
         }
-        public Token? Id { get; set; }
+        public Token? Number { get; set; }
         public CPrimeNode? CPrime { get; set; }
         public override void Accept(IVisitor v)
         {
