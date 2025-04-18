@@ -13,7 +13,7 @@ namespace Lab1.Nodes
         {
             Name = "B' *";
         }
-        public Token? Mult;
+        public Token? Mult { get; set; }
         public CNode? C { get; set; }
         public BPrimeNode? BPrimeNext { get; set; }
         public override void Accept(IVisitor v)
