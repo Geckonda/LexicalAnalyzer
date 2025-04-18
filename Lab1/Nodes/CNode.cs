@@ -8,8 +8,12 @@ namespace Lab1.Nodes
 {
     public class CNode : Node
     {
-        public Token Id {  get; set; }
-        public CPrimeNode CPrime { get; set; }
+        public CNode()
+        {
+            this.name = "C";
+        }
+        public Token? Id {  get; set; }
+        public CPrimeNode? CPrime { get; set; }
         public override void Accept(IVisitor v)
         {
             v.Visit(this);

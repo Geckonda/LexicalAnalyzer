@@ -8,8 +8,12 @@ namespace Lab1.Nodes
 {
     public class CPrimeNode : Node
     {
+        public CPrimeNode()
+        {
+            this.name = "C'";
+        }
         public bool IsEmpty { get; set; }
-        public CPrimeNode CPrimeNext { get; set; }
+        public CPrimeNode? CPrimeNext { get; set; }
 
         public override void Accept(IVisitor v)
         {

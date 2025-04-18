@@ -8,6 +8,7 @@ namespace Lab1.Nodes
 {
     public abstract class Node
     {
+        public string name;
         public abstract void Accept(IVisitor v);
 
     }

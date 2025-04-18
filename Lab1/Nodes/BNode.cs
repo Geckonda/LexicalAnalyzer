@@ -8,8 +8,12 @@ namespace Lab1.Nodes
 {
     public class BNode : Node
     {
-        public CNode C {  get; set; }
-        public BPrimeNode BPrime { get; set; }
+        public BNode()
+        {
+            this.name = "B";
+        }
+        public CNode? C {  get; set; }
+        public BPrimeNode? BPrime { get; set; }
         public override void Accept(IVisitor v)
         {
             v.Visit(this);
