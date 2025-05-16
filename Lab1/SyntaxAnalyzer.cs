@@ -34,6 +34,16 @@ namespace Lab1
         }
 
         /// <summary>
+        /// Обработать контекстную ошибку.
+        /// </summary>
+        /// <param name="msg">описание ошибки.</param>
+        private void ContextError(string msg)
+        {
+            // Генерируем исключительную ситуацию, тем самым полностью прерывая процесс анализа текста.
+            throw new ContextAnException(msg, _la.CurLineIndex, _la.CurSymIndex);
+        }
+
+        /// <summary>
         /// Проверить, что тип текущего распознанного токена совпадает с заданным.
         /// Если совпадает, то распознать следующий токен, иначе синтаксическая ошибка.
         /// </summary>
@@ -73,7 +83,8 @@ namespace Lab1
             _la.RecognizeNextToken(); // Распознаем первый токен в тексте.
             if (_la.Token.Type == TokenKind.EndOfText) return null;
 
-            SNode node = S(); // Вызываем процедуру разбора для стартового нетерминала S.
+            var usedNumbers = new HashSet<string>();
+            SNode node = S(usedNumbers); // Вызываем процедуру разбора для стартового нетерминала S.
             
             if (_la.Token.Type != TokenKind.EndOfText) // Если текущий токен не является концом текста.
             {
@@ -85,25 +96,25 @@ namespace Lab1
         /// <summary>
         /// S → B S'
         /// </summary>
-        private SNode S()
+        private SNode S(HashSet<string> usedNumbers)
         {
             SNode node = new SNode();
-            node.B = B();
-            node.SPrime = SPrime();
+            node.B = B(usedNumbers);
+            node.SPrime = SPrime(usedNumbers);
             return node;
         }
         /// <summary>
         /// S' → + B S' | ε
         /// </summary>
-        private SPrimeNode SPrime()
+        private SPrimeNode SPrime(HashSet<string> usedNumbers)
         {
             if (_la.Token.Type == TokenKind.Plus) // First(+ B S') = { '+' }
             {
                 SPrimePlusNode node = new SPrimePlusNode();
                 node.Plus = _la.Token;
                 Match(TokenKind.Plus);
-                node.B = B();
-                node.SPrimeNext = SPrime();
+                node.B = B(usedNumbers);
+                node.SPrimeNext = SPrime(usedNumbers);
                 return node;
             }
             else if (_la.Token.Type != TokenKind.EndOfText) // Follow(S') = { $ }
@@ -116,25 +127,25 @@ namespace Lab1
         /// <summary>
         ///  B → C B'
         /// </summary>
-        private BNode B()
+        private BNode B(HashSet<string> usedNumbers)
         {
             BNode node = new BNode();
-            node.C = C();
-            node.BPrime = BPrime();
+            node.C = C(usedNumbers);
+            node.BPrime = BPrime(usedNumbers);
             return node;
         }
         /// <summary>
         /// B' → * C B' | ε
         /// </summary>
-        private BPrimeNode BPrime()
+        private BPrimeNode BPrime(HashSet<string> usedNumbers)
         {
             if (_la.Token.Type == TokenKind.Multiply) // First(* C B') = { '*' }
             {
                 BPrimeMultNode node = new BPrimeMultNode();
                 node.Mult = _la.Token;
                 Match(TokenKind.Multiply);
-                node.C = C();
-                node.BPrimeNext = BPrime();
+                node.C = C(usedNumbers);
+                node.BPrimeNext = BPrime(usedNumbers);
                 return node;
             }
             else if (_la.Token.Type != TokenKind.Plus &&
@@ -148,10 +159,17 @@ namespace Lab1
         /// <summary>
         /// C → <1> C' | <2> C'
         /// </summary>
-        private CNode C()
+        private CNode C(HashSet<string> usedNumbers)
         {
             if (_la.Token.Type == TokenKind.Number)
             {
+                var value = _la.Token.Value;
+                if (usedNumbers.Contains(value!))
+                {
+                    ContextError($"Число '{value}' уже использовалось ранее");
+                }
+                usedNumbers.Add(value!);
+
                 CNumberNode node = new CNumberNode();
                 node.Number = _la.Token;
                 Match(TokenKind.Number);

@@ -44,6 +44,16 @@ namespace Lab1
 
                 richTextBoxMessages.AppendText("Текст правильный"); // Если дошли до сюда, то в тексте не было ошибок. Сообщаем об этом.
             }
+            catch (ContextAnException contextAnException)
+            {
+                // В тексте была обнаружена контекстная ошибка.
+
+                // Добавляем описание ошибки в поле сообщений.
+                richTextBoxMessages.AppendText(String.Format("Контекстная ошибка ({0},{1}): {2}", contextAnException.LineIndex + 1, contextAnException.SymIndex + 1, contextAnException.Message));
+
+                // Располагаем курсор в исходном тексте на позиции ошибки.
+                LocateCursorAtErrorPosition(contextAnException.LineIndex, contextAnException.SymIndex);
+            }
             catch (SynAnException synAnException)
             {
                 // В тексте была обнаружена синтаксическая ошибка.
