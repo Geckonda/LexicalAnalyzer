@@ -20,5 +20,10 @@ namespace Lab1.Nodes
         {
             return v.Visit(this);
         }
+
+        public override string Accept(IGenerator v, int offset)
+        {
+            return v.Visit(this, offset);
+        }
     }
 }

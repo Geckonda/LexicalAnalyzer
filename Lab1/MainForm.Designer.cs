@@ -40,6 +40,8 @@
             label5 = new Label();
             treeViewSyntax = new TreeView();
             label7 = new Label();
+            richTextBoxResult = new RichTextBox();
+            label8 = new Label();
             SuspendLayout();
             // 
             // label1
@@ -73,9 +75,9 @@
             // 
             richTextBoxInput.Location = new Point(12, 152);
             richTextBoxInput.Name = "richTextBoxInput";
-            richTextBoxInput.Size = new Size(488, 284);
+            richTextBoxInput.Size = new Size(721, 93);
             richTextBoxInput.TabIndex = 0;
-            richTextBoxInput.Text = "011011001 * 001 + baab * 001010010";
+            richTextBoxInput.Text = "011011001 * 001 + baab * 001010010 + a-- * c + b";
             // 
             // label4
             // 
@@ -89,7 +91,7 @@
             // richTextBoxMessages
             // 
             richTextBoxMessages.Enabled = false;
-            richTextBoxMessages.Location = new Point(12, 529);
+            richTextBoxMessages.Location = new Point(12, 737);
             richTextBoxMessages.Name = "richTextBoxMessages";
             richTextBoxMessages.Size = new Size(902, 99);
             richTextBoxMessages.TabIndex = 7;
@@ -98,7 +100,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(12, 506);
+            label6.Location = new Point(12, 705);
             label6.Name = "label6";
             label6.Size = new Size(82, 20);
             label6.TabIndex = 8;
@@ -106,7 +108,7 @@
             // 
             // buttonAnalyze
             // 
-            buttonAnalyze.Location = new Point(150, 442);
+            buttonAnalyze.Location = new Point(12, 251);
             buttonAnalyze.Name = "buttonAnalyze";
             buttonAnalyze.Size = new Size(350, 50);
             buttonAnalyze.TabIndex = 1;
@@ -127,26 +129,46 @@
             // treeViewSyntax
             // 
             treeViewSyntax.BackColor = SystemColors.Control;
-            treeViewSyntax.Location = new Point(538, 152);
+            treeViewSyntax.Location = new Point(12, 347);
             treeViewSyntax.Name = "treeViewSyntax";
-            treeViewSyntax.Size = new Size(376, 371);
+            treeViewSyntax.Size = new Size(449, 355);
             treeViewSyntax.TabIndex = 11;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(538, 129);
+            label7.Location = new Point(12, 315);
             label7.Name = "label7";
             label7.Size = new Size(61, 20);
             label7.TabIndex = 12;
             label7.Text = "Дерево:";
+            // 
+            // richTextBoxResult
+            // 
+            richTextBoxResult.Enabled = false;
+            richTextBoxResult.Location = new Point(467, 347);
+            richTextBoxResult.Name = "richTextBoxResult";
+            richTextBoxResult.Size = new Size(447, 355);
+            richTextBoxResult.TabIndex = 13;
+            richTextBoxResult.Text = "";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(470, 315);
+            label8.Name = "label8";
+            label8.Size = new Size(75, 20);
+            label8.TabIndex = 14;
+            label8.Text = "Результат:";
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            ClientSize = new Size(927, 636);
+            ClientSize = new Size(927, 848);
+            Controls.Add(label8);
+            Controls.Add(richTextBoxResult);
             Controls.Add(label7);
             Controls.Add(treeViewSyntax);
             Controls.Add(label5);
@@ -164,7 +186,7 @@
             MaximizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Синтаксический анализатор (с деревом)";
+            Text = "Генератор";
             ResumeLayout(false);
             PerformLayout();
         }
@@ -182,5 +204,7 @@
         private Label label5;
         private TreeView treeViewSyntax;
         private Label label7;
+        private RichTextBox richTextBoxResult;
+        private Label label8;
     }
 }

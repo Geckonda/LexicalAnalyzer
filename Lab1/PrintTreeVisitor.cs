@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Lab1
 {
-    public class PrintVisitor : IVisitor
+    public class PrintTreeVisitor : IVisitor
     {
         public TreeNode Visit(SNode node)
         {

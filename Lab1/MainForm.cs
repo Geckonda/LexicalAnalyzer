@@ -36,10 +36,13 @@ namespace Lab1
 
                 if (root != null)
                 {
-                    var visitor = new PrintVisitor();
-                    TreeNode treeRoot = root.Accept(visitor);
+                    var treeVisitor = new PrintTreeVisitor();
+                    TreeNode treeRoot = root.Accept(treeVisitor);
                     treeViewSyntax.Nodes.Add(treeRoot);
                     treeViewSyntax.ExpandAll();
+
+                    var textVisitor = new Generator();
+                    richTextBoxResult.Text = root.Accept(textVisitor, 0);
                 }
 
                 richTextBoxMessages.AppendText("Текст правильный"); // Если дошли до сюда, то в тексте не было ошибок. Сообщаем об этом.
